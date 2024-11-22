@@ -1,5 +1,7 @@
 package fr.diginamic.hello;
 
+import fr.diginamic.hello.service.HelloService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
