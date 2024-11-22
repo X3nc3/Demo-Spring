@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.diginamic</groupId>
-	<artifactId>hello</artifactId>
+	<artifactId>Tp-Spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hello</name>
 	<description>hello</description>
