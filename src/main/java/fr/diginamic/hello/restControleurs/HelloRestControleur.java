@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/hello")
 public class HelloRestControleur {
-    private String message = "Hello World !";
 
     @GetMapping
     public String sayHello() {
-        return message.toUpperCase();
+        return "Hello World !";
     }
 }
