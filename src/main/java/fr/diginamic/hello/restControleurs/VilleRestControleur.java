@@ -1,12 +1,12 @@
 package fr.diginamic.hello.restControleurs;
 
+
 import fr.diginamic.hello.entity.Ville;
 import fr.diginamic.hello.service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,55 +17,50 @@ public class VilleRestControleur {
     VilleService villeService;
 
     @GetMapping
-    public List<Ville> listeVilles(){
-        return villeService.getVilles();
-    }
-
-    @PostMapping
-    public ResponseEntity<String> insertVille(@RequestBody Ville nvVille){
-        for (Ville ville : villeService.getVilles()) {
-            if (ville.getId() == nvVille.getId()) {
-                return ResponseEntity.badRequest().body("La ville existe déjà");
-            }
-        }
-
-        villeService.postVille(nvVille);
-        return ResponseEntity.ok("Ville insérée avec succès");
+    public List<Ville> getVilles(){
+        return villeService.getAllVilles();
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<Ville> afficherVilles(@PathVariable int id){
-        for (Ville ville : villeService.getVilles()) {
-            if (ville.getId() == id) {
-                return ResponseEntity.ok(villeService.getVilleById(ville.getId()));
-            }
-        }
+    public Ville getVille(@PathVariable int id){return villeService.getVille(id);}
 
-        return ResponseEntity.badRequest().body(null);
+    @GetMapping(path = "nom/{nom}")
+    public Ville getVille(@PathVariable String nom){return villeService.getVilleByName(nom);}
+
+    @PostMapping
+    public ResponseEntity<String> postVille(@RequestBody Ville nvVille){
+        if (villeService.addVille(nvVille)) {
+            return ResponseEntity.ok("Ville insérée avec succès");
+        }else {
+            return ResponseEntity.badRequest().body("La ville existe déjà");
+        }
     }
 
-    @PutMapping(path = {"{id}"})
-    public ResponseEntity<String> modifierVille(@PathVariable int id, @RequestBody Ville ville){
-        for (Ville v : villeService.getVilles()) {
-            if (v.getId() == id) {
-                villeService.putVille(id, ville);
-                return ResponseEntity.ok("La ville " + v.getNom() + "à etait modifiée");
-            }
+    @PutMapping
+    public ResponseEntity<String> putVille(@RequestBody Ville nvville){
+            if (villeService.updateVille(nvville)) {
+                villeService.updateVille(nvville);
+                return ResponseEntity.ok("La ville " + nvville.getNom() + " à etait modifiée");
         }
-
         return ResponseEntity.badRequest().body("L'id' n'existe pas");
     }
 
     @DeleteMapping(path = "{id}")
     public ResponseEntity<String> deleteVille(@PathVariable int id){
-        for (Ville v : villeService.getVilles()) {
-            if (v.getId() == id) {
-                villeService.deleteVilleById(v.getId());
-                return ResponseEntity.ok("La ville " + v.getNom() + " est supprimée");
-            }
+        if (villeService.deleteVille(id)) {
+            villeService.deleteVille(id);
+            return ResponseEntity.ok("La ville avec l'id : " + id + " est supprimée");
         }
-
         return ResponseEntity.badRequest().body("L'id' n'existe pas");
     }
 
+    @GetMapping("/findByDepartmentCodeOrderByNbInhabitantsDesc/{codeDep}/{n}")
+    public List<Ville> findByDepartmentCodeOrderByNbInhabitantsDesc(@PathVariable("codeDep")String codeDep, @PathVariable("n") Integer n) {
+        return villeService.findByDepartmentCodeOrderByNbInhabitantsDesc(codeDep,n);
+    }
+
+    @GetMapping("/findByDepartmentCodeAndNbInhabitantsBetween/{codeDep}/{min}/{max}")
+    public List<Ville> findByDepartmentCodeAndNbInhabitantsBetween(@PathVariable("codeDep")String codeDep, @PathVariable("min") Integer min,@PathVariable("max") Integer max) {
+        return villeService.findByDepartmentCodeAndNbInhabitantsBetween(codeDep, min,max);
+    }
 }
