@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/departements")
@@ -16,7 +17,7 @@ public class DepartementRestControleur {
     DepartementService departementService;
 
     @GetMapping
-    public List<Departement> getDepartements() {
+    public Iterable<Departement> getDepartements() {
         return departementService.findAll();
     }
 

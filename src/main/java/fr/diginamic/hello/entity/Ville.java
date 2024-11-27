@@ -16,6 +16,9 @@ public class Ville {
     @ManyToOne
     @JoinColumn(name = "ID_DEPARTEMENT")
     private Departement departement;
+    @ManyToOne
+    @JoinColumn(name = "ID_REGION")
+    private Region region;
 
     public Ville(String nom, int nbHabitants, Departement departement) {
         this.nom = nom;
