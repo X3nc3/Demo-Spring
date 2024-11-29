@@ -1,4 +1,4 @@
-package fr.diginamic.hello.Repository;
+package fr.diginamic.hello.repository;
 
 import fr.diginamic.hello.entity.Ville;
 import org.springframework.data.domain.Pageable;

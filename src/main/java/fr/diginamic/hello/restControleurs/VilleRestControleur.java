@@ -1,14 +1,23 @@
 package fr.diginamic.hello.restControleurs;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfWriter;
 import fr.diginamic.hello.dto.VilleDto;
 import fr.diginamic.hello.entity.Ville;
 import fr.diginamic.hello.exception.Controle;
 import fr.diginamic.hello.mapper.VilleMapper;
 import fr.diginamic.hello.service.VilleService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,4 +96,18 @@ public class VilleRestControleur {
         return villeService.findByDepartementCodeAndNbHabitantsBetween(code,min,max);
     }
 
+    @GetMapping("/{min}/ficheCsv")
+    public void ficheVilles(@PathVariable Integer min, HttpServletResponse response) throws Controle, IOException, DocumentException {
+        response.setHeader("Content-Disposition", "attachment; filename=\"villes.csv\"");
+
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(response.getOutputStream()));
+
+        writer.write("nom; nombre habitants; code département; nom département\n");
+        List<Ville> villes = findByNbHabitantsGreaterThan(min);
+        for (Ville ville : villes) {
+            writer.write(ville.getNom() + "; " + ville.getNbHabitants() + "; " + ville.getDepartement().getCode() + "; " + String.join(";", ville.getDepartement().getNom()) + "\n");
+        }
+
+        response.flushBuffer();
+    }
 }

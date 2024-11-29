@@ -1,4 +1,4 @@
-package fr.diginamic.hello.Repository;
+package fr.diginamic.hello.repository;
 import fr.diginamic.hello.entity.Departement;
 
 import org.springframework.data.jpa.repository.JpaRepository;

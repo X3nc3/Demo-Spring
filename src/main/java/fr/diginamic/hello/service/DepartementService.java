@@ -1,5 +1,5 @@
 package fr.diginamic.hello.service;
-import fr.diginamic.hello.Repository.DepartementRepository;
+import fr.diginamic.hello.repository.DepartementRepository;
 import fr.diginamic.hello.entity.Departement;
 import fr.diginamic.hello.exception.Controle;
 

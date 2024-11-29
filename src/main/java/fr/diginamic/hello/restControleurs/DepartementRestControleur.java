@@ -1,14 +1,22 @@
 package fr.diginamic.hello.restControleurs;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfWriter;
 import fr.diginamic.hello.dto.DepartementDto;
 import fr.diginamic.hello.entity.Departement;
 import fr.diginamic.hello.exception.Controle;
 import fr.diginamic.hello.mapper.DepartementMapper;
 import fr.diginamic.hello.service.DepartementService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +66,24 @@ public class DepartementRestControleur {
     public ResponseEntity<String> deleteDepartement(@PathVariable int id) throws Controle {
         departementService.delete(id);
         return ResponseEntity.ok().body("La ville avec l'id : " + id + " est supprimée");
+    }
+
+    @GetMapping("/{code}/fichePdf")
+    public void ficheDepartement(@PathVariable String code, HttpServletResponse response) throws Controle, IOException, DocumentException {
+        response.setHeader("Content-Disposition", "attachment; filename=\"departements.pdf\"");
+
+        Document document = new Document(PageSize.A4);
+        PdfWriter.getInstance(document, response.getOutputStream());
+
+        document.open();
+        document.addTitle(departementService.findByCode(code).getNom());
+        document.newPage();
+        Phrase p1 = new Phrase(code);
+        document.add(p1);
+        Phrase p2 = new Phrase(departementService.findByCode(code).getVilles().toString());
+        document.add(p2);
+        document.close();
+
+        response.flushBuffer();
     }
 }

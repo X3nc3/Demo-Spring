@@ -1,7 +1,7 @@
 package fr.diginamic.hello.service;
 
-import fr.diginamic.hello.Repository.DepartementRepository;
-import fr.diginamic.hello.Repository.VilleRepository;
+import fr.diginamic.hello.repository.DepartementRepository;
+import fr.diginamic.hello.repository.VilleRepository;
 import fr.diginamic.hello.entity.Departement;
 import fr.diginamic.hello.entity.Ville;
 import fr.diginamic.hello.exception.Controle;
