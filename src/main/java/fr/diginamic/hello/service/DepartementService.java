@@ -1,15 +1,10 @@
 package fr.diginamic.hello.service;
-
 import fr.diginamic.hello.Repository.DepartementRepository;
-import fr.diginamic.hello.dao.DepartementDao;
 import fr.diginamic.hello.entity.Departement;
-import jakarta.annotation.PostConstruct;
+import fr.diginamic.hello.exception.Controle;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DepartementService {
@@ -32,35 +27,48 @@ public class DepartementService {
 
     public Iterable<Departement> findAll() {return departementRepository.findAll();}
 
-    public Departement findByCode(String code) {return departementRepository.findByCode(code);}
-
-    public Departement findById(int id) {return departementRepository.findById(id).get();}
-
-    public Boolean create(Departement departement) {
-        try {
-            departementRepository.save(departement);
-            return true;
-        }catch (Exception e) {
-            return false;
+    public Departement findByCode(String code) throws Controle {
+        if (departementRepository.findByCode(code) != null) {
+            return departementRepository.findByCode(code);
+        } else {
+            throw new Controle("Le code département n'existe pas");
         }
     }
 
-    public Boolean update(Departement departement) {
-//        if (departementRepository.findById(departement.getId()) == null) {
-//            return false;
-//        }else {
-            departementRepository.save(departement);
-            return true;
-//        }
+    public Departement findById(int id) throws Controle {
+        if (departementRepository.findById(id).isPresent()) {
+            return departementRepository.findById(id).get();
+        } else {
+            throw new Controle("L'id n'existe pas");
+        }
     }
 
-    public Boolean delete(int id) {
-//        if (departementDao.findById(id) == null) {
-//            return false;
-//        }else {
+    private void validerDepartement (Departement departement) throws Controle {
+        if (departement.getCode().length() < 2 && departement.getCode().length() >3) {
+            throw new Controle("Le code département fait au maximum 3 caractères et au minimum 2");
+        } else if (departement.getNom().length() < 3) {
+            throw new Controle("Le nom du département est obligatoire et comporte au moins 3 lettres");
+        } else if (departement.getCode().equals(departementRepository.findByCode(departement.getCode()).getCode())) {
+            throw new Controle("Le code département doit etre unique");
+        }
+    }
+
+    public void create(Departement departement) throws Controle {
+        validerDepartement(departement);
+        departementRepository.save(departement);
+    }
+
+    public void update(Departement departement) throws Controle {
+        validerDepartement(departement);
+        departementRepository.save(departement);
+    }
+
+    public void delete(int id) throws Controle {
+        if (departementRepository.findById(id).isPresent()) {
             departementRepository.deleteById(id);
-            return true;
-//        }
+        } else {
+            throw new Controle("L'id n'éxiste pas");
+        }
     }
 
 }

@@ -16,7 +16,7 @@ public class Departement {
     @Column(name = "CODE")
     private String code;
     @OneToMany(mappedBy = "departement")
-    private static List<Ville> villes;
+    private List<Ville> villes;
 
     {
         villes = new ArrayList<>();
@@ -53,11 +53,20 @@ public class Departement {
         this.code = code;
     }
 
-    public static List<Ville> getVilles() {
+    public List<Ville> getVilles() {
         return villes;
     }
 
-    public static void setVilles(List<Ville> villes) {
-        Departement.villes = villes;
+    public void setVilles(List<Ville> villes) {
+        this.villes = villes;
+    }
+
+    @Override
+    public String toString() {
+        return "Departement{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

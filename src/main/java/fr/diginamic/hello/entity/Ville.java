@@ -60,4 +60,15 @@ public class Ville {
     public void setDepartement(Departement departement) {
         this.departement = departement;
     }
+
+    @Override
+    public String toString() {
+        return "Ville{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", nbHabitants=" + nbHabitants +
+                ", departement=" + departement +
+                ", region=" + region +
+                '}';
+    }
 }

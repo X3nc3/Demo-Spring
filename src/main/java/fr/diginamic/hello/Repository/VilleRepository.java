@@ -1,11 +1,8 @@
 package fr.diginamic.hello.Repository;
 
-import fr.diginamic.hello.entity.Departement;
 import fr.diginamic.hello.entity.Ville;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
-
 
 import java.util.List;
 
