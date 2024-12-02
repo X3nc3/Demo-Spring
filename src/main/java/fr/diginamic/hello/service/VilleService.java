@@ -54,7 +54,7 @@ public class VilleService {
         if (villeRepository.findByNom(nom) != null) {
             return villeRepository.findByNom(nom);
         } else {
-            throw new Controle("L'nom n'existe pas");
+            throw new Controle("Le nom n'existe pas");
         }
     }
 

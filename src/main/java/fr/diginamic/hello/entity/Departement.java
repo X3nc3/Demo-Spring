@@ -29,6 +29,12 @@ public class Departement {
         this.code = code;
     }
 
+    public Departement(int id, String nom, String code) {
+        this.id = id;
+        this.nom = nom;
+        this.code = code;
+    }
+
     public int getId() {
         return id;
     }

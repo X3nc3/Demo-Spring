@@ -26,6 +26,13 @@ public class Ville {
         this.departement = departement;
     }
 
+    public Ville(int id, String nom, int nbHabitants, Departement departement) {
+        this.id = id;
+        this.nom = nom;
+        this.nbHabitants = nbHabitants;
+        this.departement = departement;
+    }
+
     public Ville() {
     }
 
