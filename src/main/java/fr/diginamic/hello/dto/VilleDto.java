@@ -1,10 +1,18 @@
 package fr.diginamic.hello.dto;
 
+import fr.diginamic.hello.entity.Ville;
+
 public class VilleDto {
     private String nom;
     private int nbHabitants;
     private String codeDepartement;
     private String nomDepartement;
+
+    public VilleDto(Ville nvVille) {
+    }
+
+    public VilleDto() {
+    }
 
     public String getNom() {
         return nom;
