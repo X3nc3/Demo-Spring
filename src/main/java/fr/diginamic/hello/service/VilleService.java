@@ -8,6 +8,7 @@ import fr.diginamic.hello.exception.Controle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -93,6 +94,7 @@ public class VilleService {
             }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteVille(int id) throws Controle {
         if (villeRepository.existsById(id)) {
             villeRepository.deleteById(id);

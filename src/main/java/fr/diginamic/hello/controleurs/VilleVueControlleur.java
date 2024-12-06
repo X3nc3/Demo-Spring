@@ -5,6 +5,8 @@ import fr.diginamic.hello.exception.Controle;
 import fr.diginamic.hello.service.DepartementService;
 import fr.diginamic.hello.service.VilleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +19,8 @@ public class VilleVueControlleur {
     VilleService villeService;
 
     @GetMapping("/villeList")
-    public String getVilles(Model model) {
+    public String getVilles(Model model, Authentication authentication) {
+        model.addAttribute("authentication", authentication);
         model.addAttribute("villes", villeService.getAllVilles());
         return "ville/villeList";
     }

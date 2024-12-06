@@ -5,6 +5,11 @@
     <title>Liste des villes</title>
 </head>
 <body>
+<h3>Profil utilisateur</h3>
+<ul>
+    <li th:text="'Username :' +${authentication.name}">Username</li>
+    <li th:text="'Authorities : '+${authentication.authorities}">Authorities</li>
+</ul>
     <table>
         <thead>
         <tr>
